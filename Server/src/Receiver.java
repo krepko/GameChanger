@@ -1,4 +1,4 @@
-package transport;
+
 
 import java.io.*;
 import java.net.*;
@@ -50,20 +50,18 @@ public class Receiver extends Thread  {
 				in = new ObjectInputStream(connection.getInputStream());
 
 				//4. The two parts communicate via the input and output streams
-				do {
-					try{
-						message = (String)in.readObject();
-						//System.out.print("\0x08 < " + message + "\n> ");
-					}
-					catch(ClassNotFoundException classnot){
-						System.err.println("Data received in unknown format");
-					}
-				} while (!message.equals("%endtrans"));
+
+				message = (String)in.readObject();
+				
 			}
+			
 
 		}
 		catch(IOException ioException){
 			ioException.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		finally{
 			//4: Closing connection
